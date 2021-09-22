@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Check Out Calc</string>
+    <string name="add_you_items_here">Add you items here</string>
+    <string name="add_to_cart">ADD TO CART</string>
+    <string name="view_cart">VIEW CART</string>
+    <string name="item_name">Item name</string>
+    <string name="price_per_unit">Price per unit</string>
+    <string name="quantity">Quantity (DE: 1)</string>
+    <string name="discount_in_off">Discount</string>
+    <string name="_13">13</string>
+    <string name="my_cart">My Cart</string>
+    <string name="save_as_default_tax">save as default tax</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="total">Total</string>
+    <string name="textview">TextView</string>
+    <string name="percentage_sign">%</string>
+    <string name="tax">Tax</string>
+    <string name="off">% off</string>
+    <string name="textview2">TextView2</string>
+    <string name="textview1">TextView1</string>
+</resources>
