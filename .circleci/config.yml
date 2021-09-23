@@ -33,8 +33,8 @@ jobs:
             ./gradlew assembleRelease
 
       - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
-          path: app/build/reports
-          destination: reports
+          path: app/build/outputs/apk
+          destination: apk
 
 workflows:
   # Below is the definition of your workflow.
