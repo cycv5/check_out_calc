@@ -28,6 +28,7 @@ public class Cart extends AppCompatActivity {
     public static double tax;
     public static double default_tax = 13;
     Toast t;
+    public static double sub_sum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public class Cart extends AppCompatActivity {
     }
 
     public void update_total(){
-        double sub_sum = 0;
+
         for (int i = 0; i < MainActivity.items.size(); i++){
             sub_sum += MainActivity.items.get(i).getPrice();
         }

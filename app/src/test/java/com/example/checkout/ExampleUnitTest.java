@@ -11,7 +11,13 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void subtotal_isCorrect() {
+        /* Check if the subtotal is correctly calculated*/
+        double subtotal_sum = 0;
+        for(int i = 0; i < MainActivity.items.size(); i++){
+            subtotal_sum += MainActivity.items.get(i).getPrice();
+        }
+        subtotal_sum = Math.round(subtotal_sum * 100.0) / 100.0;
+        assert(subtotal_sum == Cart.sub_sum);
     }
 }
