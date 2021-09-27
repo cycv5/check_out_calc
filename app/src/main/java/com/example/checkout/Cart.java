@@ -124,7 +124,7 @@ public class Cart extends AppCompatActivity {
     }
 
     public void update_total(){
-
+        sub_sum = 0;
         for (int i = 0; i < MainActivity.items.size(); i++){
             sub_sum += MainActivity.items.get(i).getPrice();
         }
