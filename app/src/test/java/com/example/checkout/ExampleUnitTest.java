@@ -13,8 +13,6 @@ public class ExampleUnitTest {
     @Test
     public void subtotal_isCorrect() {
         /* Check if the subtotal is correctly calculated*/
-        MainActivity.items.add(new Item("food", 10));
-        MainActivity.items.add(new Item("game", 20.99));
         double subtotal_sum = 0;
         for(int i = 0; i < MainActivity.items.size(); i++){
             subtotal_sum += MainActivity.items.get(i).getPrice();
