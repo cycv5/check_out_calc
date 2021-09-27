@@ -15,24 +15,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {
-        release {
-            storeFile file("checkout_keystore.jks")
-            storePassword '123456'
-            keyAlias 'key1'
-            keyPassword '123456'
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfigs signingConfigs.release
         }
-    }
-    debug{
-        debuggable true
     }
 
     compileOptions {
