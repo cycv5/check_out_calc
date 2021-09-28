@@ -6,40 +6,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 
 public class Cart extends AppCompatActivity {
 
     public ListView listView;
-    private Button button_back;
-    private Button button_save;
     private TextView subtotal_p;
     private TextView total_p;
     private EditText tax_p;
     public static double tax;
     public static double default_tax = 13;
-    Toast t;
     public static double sub_sum = 0;
 
+    Toast t;
+    ItemListAdapter adapter = MainActivity.getInstanceActivity().adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        button_back = (Button) findViewById(R.id.btn_back);
-        button_save = (Button) findViewById(R.id.btn_save);
-        subtotal_p = (TextView) findViewById(R.id.subtotal_price);
-        total_p = (TextView) findViewById(R.id.total_price);
-        tax_p = (EditText) findViewById(R.id.tax_amt);
+        Button button_back = findViewById(R.id.btn_back);
+        Button button_save = findViewById(R.id.btn_save);
+        subtotal_p = findViewById(R.id.subtotal_price);
+        total_p = findViewById(R.id.total_price);
+        tax_p = findViewById(R.id.tax_amt);
 
         tax_p.setHint(String.valueOf(default_tax));
         tax = default_tax;
@@ -53,13 +48,14 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String tax_str = tax_p.getText().toString();
-                if (tax_str == null || tax_str.length() == 0){
+                if (tax_str.length() == 0){
                     tax = default_tax;
                 }
                 else{
                     tax = Double.parseDouble(tax_str);
                 }
-                update_total();
+                String[] totals = update_total();
+                setTotalTxt(totals[0], totals[1]);
             }
 
             @Override
@@ -68,43 +64,34 @@ public class Cart extends AppCompatActivity {
             }
         });
 
-        listView = (ListView) findViewById(R.id.listview);
+        listView = findViewById(R.id.listview);
 
-        listView.setAdapter(MainActivity.adapter);
+        listView.setAdapter(adapter);
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int i, long l) {
-                removeItem(i);
-                update_total();
-                makeToast("Item removed");
-                return false;
-            }
+        listView.setOnItemLongClickListener((parent, view, i, l) -> {
+            removeItem(i);
+            String[] totals = update_total();
+            setTotalTxt(totals[0], totals[1]);
+            makeToast("Item removed");
+            return false;
         });
 
-        button_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                openMain();
+        button_back.setOnClickListener(v -> openMain());
+
+        button_save.setOnClickListener(v -> {
+            if (tax_p.getText().toString().length() == 0){
+                makeToast("Nothing to be saved");
             }
+            else{
+                default_tax = Double.parseDouble(tax_p.getText().toString());
+                tax_p.setHint(String.valueOf(default_tax));
+                makeToast("New default tax rate saved");
+            }
+
         });
 
-        button_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tax_p.getText().toString() == null || tax_p.getText().toString().length() == 0){
-                    makeToast("Nothing to be saved");
-                }
-                else{
-                    default_tax = Double.parseDouble(tax_p.getText().toString());
-                    tax_p.setHint(String.valueOf(default_tax));
-                    makeToast("New default tax rate saved");
-                }
-
-            }
-        });
-
-        update_total();
+        String[] totals = update_total();
+        setTotalTxt(totals[0], totals[1]);
     }
 
     private void makeToast(String s){
@@ -115,7 +102,7 @@ public class Cart extends AppCompatActivity {
 
     public void removeItem(int index){
         MainActivity.items.remove(index);
-        MainActivity.adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     public void openMain(){
@@ -123,14 +110,26 @@ public class Cart extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void update_total(){
+    public static String[] update_total(){
         sub_sum = 0;
         for (int i = 0; i < MainActivity.items.size(); i++){
             sub_sum += MainActivity.items.get(i).getPrice();
         }
         double sum = Math.round(sub_sum * (1 + tax/100) * 100.0) / 100.0;
 
-        subtotal_p.setText("$" + String.valueOf(Math.round(sub_sum * 100.0) / 100.0));
-        total_p.setText("$" + String.valueOf(sum));
+        String subtotal_txt = "$" + Math.round(sub_sum * 100.0) / 100.0;
+        String total_txt = "$" + sum;
+
+        String[] totals = new String[2];
+        totals[0] = subtotal_txt;
+        totals[1] = total_txt;
+
+        return totals;
     }
+
+    public void setTotalTxt(String sub, String ttl){
+        subtotal_p.setText(sub);
+        total_p.setText(ttl);
+    }
+
 }
