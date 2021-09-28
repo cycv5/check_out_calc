@@ -7,4 +7,4 @@ You can view your shopping cart, and long press an item to delete.
 You can also set/save a tax rate so that the total price shows you the tax included amount.
 
 ## System requirements
-Runs on Android 7.0 or later
+Runs on Android 11.0 or later
