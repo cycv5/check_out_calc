@@ -113,7 +113,7 @@ public class Cart extends AppCompatActivity {
     public static String[] update_total(){
         sub_sum = 0;
         for (int i = 0; i < MainActivity.items.size(); i++){
-            sub_sum += MainActivity.items.get(i).getPrice();
+            sub_sum += MainActivity.items.get(i).getFinalPrice();
         }
         double sum = Math.round(sub_sum * (1 + tax/100) * 100.0) / 100.0;
 

@@ -89,13 +89,13 @@
         android:layout_height="45dp"
         android:ems="10"
         android:hint="@string/quantity"
-        android:inputType="number"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/btn_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/price"
-        app:layout_constraintVertical_bias="0.21"
-        android:importantForAutofill="no"/>
+        app:layout_constraintVertical_bias="0.21" />
 
     <EditText
         android:id="@+id/discount"
@@ -120,11 +120,10 @@
         android:layout_height="wrap_content"
         android:text="@string/off"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_add"
+        app:layout_constraintBottom_toBottomOf="@+id/discount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/discount"
-        app:layout_constraintTop_toBottomOf="@+id/quantity"
-        app:layout_constraintVertical_bias="0.435" />
+        app:layout_constraintTop_toTopOf="@+id/discount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 double price_in_double = Double.parseDouble(entered_price);
                 double final_price = price_in_double * quant_in_double * ((100 - discount_in_double) / 100);
                 // double final_price_rounded = Math.round(final_price * 100.0) / 100.0;
-                Item new_item = new Item(entered_name, final_price);
+                Item new_item = new Item(entered_name, price_in_double, quant_in_double, discount_in_double);
                 items.add(new_item);
                 adapter.notifyDataSetChanged();
                 item_txt.getText().clear();

@@ -2,11 +2,15 @@ package com.example.checkout;
 
 public class Item {
     private String name;
-    private double price;
+    private final double price;
+    private final double quant;
+    private final double discount;
 
-    public Item(String name, double price) {
+    public Item(String name, double price, double quant, double discount) {
         this.name = name;
         this.price = price;
+        this.quant = quant;
+        this.discount = discount;
     }
 
     public String getName() {
@@ -21,7 +25,16 @@ public class Item {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public double getQuant() {
+        return quant;
     }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public double getFinalPrice(){
+        return price * quant * ((100 - discount) / 100);
+    }
+
 }

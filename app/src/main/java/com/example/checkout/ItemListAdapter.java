@@ -11,11 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemListAdapter extends ArrayAdapter<Item> {
-    private static final String TAG = "ItemListAdapter";
-    private Context m_context;
+    private final Context m_context;
     int m_resource;
 
 
@@ -30,17 +28,41 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String name = getItem(position).getName();
         double price = getItem(position).getPrice();
+        double quant = getItem(position).getQuant();
+        double discount = getItem(position).getDiscount();
 
-        Item item = new Item(name, price);
+
+        Item item = new Item(name, price, quant, discount);
 
         LayoutInflater l_inflater = LayoutInflater.from(m_context);
         convertView = l_inflater.inflate(m_resource, parent, false);
 
-        TextView t_name = (TextView) convertView.findViewById(R.id.item_name_text);
-        TextView t_price = (TextView) convertView.findViewById(R.id.item_price_text);
+        TextView t_name = convertView.findViewById(R.id.item_name_text);
+        TextView t_price = convertView.findViewById(R.id.item_price_text);
 
-        t_name.setText(name);
-        String price_tag = "$" + Math.round(price * 100.0) / 100.0;
+        String name_field;
+        int rounded_quant;
+        if (quant % 1 == 0){
+            rounded_quant = (int)Math.round(quant);
+            if (discount == 0){
+                name_field = name + " (x" + rounded_quant + ")";
+            }
+            else{
+                name_field = name + " (x" + rounded_quant + ", " + discount + "% off)";
+            }
+        }
+        else {
+            if (discount == 0){
+                name_field = name + " (x" + quant + ")";
+            }
+            else{
+                name_field = name + " (x" + quant + ", " + discount + "% off)";
+            }
+        }
+
+
+        t_name.setText(name_field);
+        String price_tag = "$" + Math.round(item.getFinalPrice() * 100.0) / 100.0;
         t_price.setText(price_tag);
 
         return convertView;
